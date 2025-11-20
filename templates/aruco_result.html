@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ArUco Results for {{ output_name }}</title>
+    <style>
+        :root {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            --bg: #020617;
+            --panel: #0b1120;
+            --card: #020617;
+            --border: #1f2937;
+            --accent: #38bdf8;
+            --accent-soft: #0f172a;
+            --text-main: #e5e7eb;
+            --text-muted: #9ca3af;
+        }
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: radial-gradient(circle at top, #1e293b, #020617 55%);
+            color: var(--text-main);
+        }
+        .page {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 28px 20px 40px;
+        }
+        .header-card {
+            background: linear-gradient(135deg, #0f172a, #020617);
+            border-radius: 18px;
+            padding: 20px 22px;
+            border: 1px solid #1f2937;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+            margin-bottom: 20px;
+        }
+        h1 {
+            text-align: left;
+            margin: 0 0 6px;
+            font-size: 1.3rem;
+        }
+        h1 span {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: var(--accent);
+            text-decoration: none;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.1s ease;
+        }
+        .back-link::before {
+            content: "←";
+            font-size: 0.95rem;
+        }
+        .back-link:hover {
+            background: rgba(15, 23, 42, 1);
+            transform: translateY(-1px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.8);
+        }
+        h2 {
+            margin: 26px 0 10px;
+            text-align: left;
+            font-size: 1.05rem;
+        }
+        .subtitle {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            gap: 18px;
+            margin-top: 10px;
+        }
+        .grid-item {
+            background: var(--panel);
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            padding: 12px 12px 14px;
+            box-shadow: 0 16px 30px rgba(0, 0, 0, 0.7);
+        }
+        .grid-item h3 {
+            margin: 0 0 8px;
+            font-size: 0.95rem;
+        }
+        .grid-item p {
+            margin: 0 0 8px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .grid-item img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 10px;
+            border: 1px solid #111827;
+            background: #020617;
+        }
+        .label-pill {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.6);
+            color: var(--text-muted);
+            margin-bottom: 3px;
+        }
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <div class="header-card">
+        <h1>
+            Part 4 Results: {{ output_name }}
+            <span>ArUco Marker Segmentation</span>
+        </h1>
+        <a href="{{ url_for('index_aruco') }}" class="back-link">Back to Part 4 Dashboard</a>
+    </div>
+
+    <h2>ArUco Marker Segmentation</h2>
+    <p class="subtitle">Visualization of the original image and the segmented marker boundary (convex hull).</p>
+
+    <div class="grid-container">
+        <div class="grid-item">
+            <span class="label-pill">Input</span>
+            <h3>Original Image</h3>
+            <p>The original frame from the ArUco dataset.</p>
+            <img src="{{ url_for('static', filename='output/' + output_name + '_original.jpg') }}" alt="Original image">
+        </div>
+        <div class="grid-item">
+            <span class="label-pill">Output</span>
+            <h3>Segmented Boundary (Convex Hull)</h3>
+            <p>Detected marker region visualized via its convex hull.</p>
+            <img src="{{ url_for('static', filename='output/' + output_name + '_segmented.jpg') }}" alt="Segmented boundary">
+        </div>
+    </div>
+</div>
+</body>
+</html>

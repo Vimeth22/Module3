@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Results for {{ output_name }}</title>
+    <style>
+        :root {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            --bg: #020617;
+            --panel: #020617;
+            --panel-alt: #0b1120;
+            --border: #1f2937;
+            --accent1: #38bdf8;
+            --accent2: #a855f7;
+            --accent3: #22c55e;
+            --text-main: #e5e7eb;
+            --text-muted: #9ca3af;
+        }
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: radial-gradient(circle at top, #1e293b, #020617 55%);
+            color: var(--text-main);
+        }
+        .page {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 28px 20px 40px;
+        }
+        .header-card {
+            background: linear-gradient(135deg, #0b1120, #020617);
+            border-radius: 18px;
+            padding: 20px 22px;
+            border: 1px solid #111827;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.7);
+            margin-bottom: 22px;
+        }
+        h1 {
+            margin: 0 0 6px;
+            font-size: 1.35rem;
+            text-align: left;
+        }
+        h1 span {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: var(--accent1);
+            text-decoration: none;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.92);
+            border: 1px solid rgba(56, 189, 248, 0.5);
+            transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.1s ease;
+        }
+        .back-link::before {
+            content: "←";
+            font-size: 0.95rem;
+        }
+        .back-link:hover {
+            background: rgba(15, 23, 42, 1);
+            transform: translateY(-1px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.85);
+        }
+        h2 {
+            margin: 26px 0 10px;
+            font-size: 1.05rem;
+        }
+        .section-sub {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            gap: 18px;
+            padding-top: 4px;
+        }
+        .grid-container-single {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            max-width: 520px;
+            margin: 0 auto;
+            gap: 18px;
+            padding-top: 4px;
+        }
+        .grid-item {
+            background: var(--panel-alt);
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            padding: 12px 12px 14px;
+            box-shadow: 0 18px 30px rgba(0, 0, 0, 0.75);
+        }
+        .grid-item h3 {
+            margin: 4px 0 8px;
+            font-size: 0.95rem;
+        }
+        .grid-item p {
+            margin: 0 0 8px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .grid-item img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 10px;
+            border: 1px solid #020617;
+            background: #020617;
+        }
+        .pill {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 999px;
+            margin-bottom: 3px;
+            border: 1px solid rgba(148, 163, 184, 0.7);
+            color: var(--text-muted);
+        }
+        .pill.blue { border-color: rgba(56, 189, 248, 0.7); color: #7dd3fc; }
+        .pill.purple { border-color: rgba(168, 85, 247, 0.7); color: #e9d5ff; }
+        .pill.green { border-color: rgba(34, 197, 94, 0.7); color: #bbf7d0; }
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <div class="header-card">
+        <h1>
+            Results: {{ output_name }}
+            <span>Assignment 3 – Parts 1–3</span>
+        </h1>
+        <a href="{{ url_for('index') }}" class="back-link">Back to Dashboard</a>
+    </div>
+
+    <!-- Part 1 -->
+    <h2>Part 1: Gradients &amp; LoG</h2>
+    <p class="section-sub">Gradient magnitude, orientation, and Laplacian of Gaussian from the selected input image.</p>
+    <div class="grid-container">
+        <div class="grid-item">
+            <span class="pill blue">Input</span>
+            <h3>Original</h3>
+            <p>Original grayscale / color image used for all following processing steps.</p>
+            <img src="{{ url_for('static', filename='output/' + output_name + '_original.jpg') }}" alt="Original image">
+        </div>
+        <div class="grid-item">
+            <span class="pill blue">Gradient</span>
+            <h3>Gradient Magnitude</h3>
+            <p>Strength of the spatial intensity change at each pixel.</p>
+            <img src="{{ url_for('static', filename='output/' + output_name + '_magnitude.jpg') }}" alt="Gradient magnitude">
+        </div>
+        <div class="grid-item">
+            <span class="pill blue">Gradient</span>
+            <h3>Gradient Angle</h3>
+            <p>Orientation of the local gradient (edge direction) in radians or degrees.</p>
+            <img src="{{ url_for('static', filename='output/' + output_name + '_angle.jpg') }}" alt="Gradient angle">
+        </div>
+        <div class="grid-item">
+            <span class="pill blue">Filter</span>
+            <h3>Laplacian of Gaussian (LoG)</h3>
+            <p>Second–order derivative filter highlighting regions of rapid intensity change.</p>
+            <img src="{{ url_for('static', filename='output/' + output_name + '_log.jpg') }}" alt="Laplacian of Gaussian">
+        </div>
+    </div>
+
+    <!-- Part 2 -->
+    <h2>Part 2: Edge &amp; Corner Keypoints</h2>
+    <p class="section-sub">Keypoints extracted using Canny edges and Harris corner detection.</p>
+    <div class="grid-container">
+        <div class="grid-item">
+            <span class="pill purple">Edges</span>
+            <h3>Edge Keypoints (Canny)</h3>
+            <p>Detected edge pixels after Canny edge detection.</p>
+            <img src="{{ url_for('static', filename='output/' + output_name + '_edges.jpg') }}" alt="Canny edges">
+        </div>
+        <div class="grid-item">
+            <span class="pill purple">Corners</span>
+            <h3>Corner Keypoints (Harris)</h3>
+            <p>Strong corner responses highlighted using the Harris detector.</p>
+            <img src="{{ url_for('static', filename='output/' + output_name + '_corners.jpg') }}" alt="Harris corners">
+        </div>
+    </div>
+
+    <!-- Part 3 -->
+    <h2>Part 3: Object Boundary (Contours)</h2>
+    <p class="section-sub">Largest closed contour extracted from the Canny edge map.</p>
+    <div class="grid-container-single">
+        <div class="grid-item">
+            <span class="pill green">Contour</span>
+            <h3>Largest Contour from Canny</h3>
+            <p>Visualization of the dominant object boundary extracted from detected edges.</p>
+            <img src="{{ url_for('static', filename='output/' + output_name + '_boundary.jpg') }}" alt="Largest contour boundary">
+        </div>
+    </div>
+</div>
+</body>
+</html>

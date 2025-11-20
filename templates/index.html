@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Assignment 3 – Dashboard</title>
+    <style>
+        :root {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            --bg: #f1f5f9;
+            --card: #ffffff;
+            --accent: #2563eb;
+            --accent-soft: #dbeafe;
+            --accent-alt: #16a34a;
+            --text-main: #0f172a;
+            --text-muted: #6b7280;
+            --border: #e5e7eb;
+        }
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            padding: 32px 20px;
+            background: linear-gradient(135deg, #dbeafe, #f1f5f9 40%, #e5e7eb);
+            color: var(--text-main);
+        }
+        .page {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card);
+            border-radius: 18px;
+            padding: 24px 24px 28px;
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            margin: 0 0 4px;
+            font-size: 1.4rem;
+        }
+        h1 span {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+        .pill {
+            font-size: 0.78rem;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: var(--accent-soft);
+            color: var(--accent);
+            border: 1px solid #bfdbfe;
+            font-weight: 500;
+        }
+        .nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+            padding: 9px 15px;
+            border-radius: 999px;
+            background: #ecfdf3;
+            color: #14532d;
+            border: 1px solid #bbf7d0;
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.1s ease;
+        }
+        .nav-link::after {
+            content: "→";
+            font-size: 0.9rem;
+        }
+        .nav-link:hover {
+            background: #dcfce7;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 18px rgba(22, 163, 74, 0.35);
+        }
+        .section-title {
+            font-size: 1.05rem;
+            margin-top: 6px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 6px;
+        }
+        .file-list {
+            list-style: none;
+            margin: 16px 0 0;
+            padding: 0;
+        }
+        .file-item {
+            margin-bottom: 10px;
+        }
+        .file-link {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 14px;
+            border-radius: 10px;
+            background: #1d4ed8;
+            color: #f9fafb;
+            text-decoration: none;
+            font-size: 0.9rem;
+            box-shadow: 0 6px 14px rgba(37, 99, 235, 0.5);
+            transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
+        }
+        .file-link span {
+            font-weight: 500;
+        }
+        .file-link small {
+            opacity: 0.85;
+            font-size: 0.8rem;
+        }
+        .file-link:hover {
+            background: #1e40af;
+            transform: translateY(-1px);
+            box-shadow: 0 12px 24px rgba(30, 64, 175, 0.7);
+        }
+        .empty {
+            padding: 14px 12px;
+            border-radius: 12px;
+            border: 1px dashed #fed7aa;
+            background: #fff7ed;
+            color: #9a3412;
+            font-size: 0.9rem;
+        }
+        .empty p {
+            margin: 4px 0 0;
+            font-size: 0.82rem;
+            color: #c2410c;
+        }
+        code {
+            font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 0.8rem;
+            background: #ffedd5;
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <header>
+        <div>
+            <h1>
+                Assignment 3 – Parts 1–3
+                <span>Gradients · Keypoints · Contours</span>
+            </h1>
+        </div>
+        <div class="pill">Image Processing</div>
+    </header>
+
+    <a href="{{ url_for('index_aruco') }}" class="nav-link">
+        Go to Part 4 (ArUco)
+    </a>
+
+    <h2 class="section-title">Dataset Images</h2>
+    <ul class="file-list">
+        {% for fn in filenames %}
+            <li class="file-item">
+                <a class="file-link" href="{{ url_for('view_image', filename=fn) }}">
+                    <div>
+                        <span>Process &amp; View</span>
+                        <br>
+                        <small>{{ fn }}</small>
+                    </div>
+                    <small>View →</small>
+                </a>
+            </li>
+        {% else %}
+            <li class="empty">
+                <strong>No images found</strong>
+                <p>Add images to the <code>dataset</code> folder.</p>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+</body>
+</html>
