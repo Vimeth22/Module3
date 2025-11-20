@@ -172,11 +172,29 @@ def process_and_save_aruco(filename):
         # Gather all marker corners into one big array
         all_marker_corners = np.concatenate(corners)
 
-        # Compute convex hull around all markers to get a global boundary
-        hull = cv2.convexHull(all_marker_corners)
-
-        # Draw the convex hull boundary in green
-        cv2.drawContours(segmented_image, [hull], -1, (0, 255, 0), 3)
+        # Check if all_marker_corners is not empty and has correct shape
+        if all_marker_corners is not None and len(all_marker_corners) > 0:
+            all_marker_corners = np.array(all_marker_corners, dtype=np.float32)
+            print(f"all_marker_corners value: {all_marker_corners}, shape: {all_marker_corners.shape}, dtype: {all_marker_corners.dtype}")
+            # Robust check for correct shape and type
+            if (
+                all_marker_corners is not None
+                and isinstance(all_marker_corners, np.ndarray)
+                and all_marker_corners.size > 0
+                and all_marker_corners.ndim == 2
+                and all_marker_corners.shape[1] == 2
+            ):
+                try:
+                    hull = cv2.convexHull(all_marker_corners)
+                    # Draw the convex hull boundary in green
+                    cv2.drawContours(segmented_image, [hull], -1, (0, 255, 0), 3)
+                except cv2.error as e:
+                    print(f"OpenCV error in convexHull: {e}")
+                    hull = None
+            else:
+                print("Invalid or empty marker corners for convexHull:", all_marker_corners)
+        else:
+            print("No marker corners found, skipping convexHull.")
 
     # Save the segmented ArUco visualization
     cv2.imwrite(output_paths["segmented"], segmented_image)
