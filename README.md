@@ -1,54 +1,99 @@
-# Computer Vision – Module 3 (Flask + OpenCV)
+# Assignment 3 – Complete Image Processing Web Application
+### Gradients · Keypoints · Contours · ArUco Marker Segmentation
 
-This project implements all five tasks from Module 3 and runs **in real time** as a small web app.
+This project is a full Flask-based web application implementing all four parts of Assignment 3 in the Computer Vision course. It processes images using OpenCV and displays the results through an interactive browser interface.
 
-## Features
+The system supports:  
+- Gradient filtering  
+- Edge and corner keypoint detection  
+- Largest contour extraction  
+- ArUco marker segmentation  
 
-1. **Gradients & LoG**  
-   - Computes Sobel gradients (magnitude & angle)  
-   - Computes Laplacian of Gaussian (LoG)
+All input images are selected directly through the web UI, and all outputs are saved automatically to the `static/output` directory.
 
-2. **Keypoints: Edges & Corners (no ML)**  
-   - Edges via gradient-based Canny + non-maximum suppression  
-   - Corners via Shi–Tomasi (`cv2.goodFeaturesToTrack`)
+## 1. Project Structure
 
-3. **Exact Object Boundary**  
-   - Otsu thresholding + morphology  
-   - Largest connected component + contour extraction  
-   - Polygonal simplification (Douglas–Peucker)
+```
+Assignment3/
+│── app.py
+│── requirements.txt
+│
+├── templates/
+│   ├── index.html
+│   ├── result.html
+│   ├── aruco_index.html
+│   └── aruco_result.html
+│
+└── static/
+    ├── dataset/
+    ├── dataset_aruco/
+    └── output/
+```
 
-4. **Segmentation of a Non-Rectangular Object with ArUco Markers**  
-   - Detects ArUco markers on the boundary  
-   - Builds a polygon from detected corners (sorted angularly)  
-   - Refines foreground with GrabCut using the polygon as the initial mask
+## 2. Features Included
 
-5. **Comparison with SAM2 (optional)**  
-   - If you have SAM2 installed, the app can call it and compute IoU between our mask and SAM2’s mask.
+### Part 1 – Image Gradients
+- Gradient magnitude  
+- Gradient angle  
+- Laplacian of Gaussian (LoG)
 
-## How to run
+### Part 2 – Keypoint Detection
+- Canny edges  
+- Harris corners  
 
-1. **Install dependencies**
-   ```bash
-   python -m venv .venv
-   source .venv/bin/activate  # Windows: .venv\Scripts\activate
-   pip install -r requirements.txt
-   ```
+### Part 3 – Object Contour Extraction
+- Extracts the largest contour  
+- Draws the boundary  
 
-2. **Add your dataset**  
-   Put **at least 10 images of the same object** (varied angles/distances) in:
-   ```
-   static/dataset/
-   ```
+### Part 4 – ArUco Marker Segmentation
+- Detects ArUco marker  
+- Computes convex hull  
+- Displays original + segmented output  
 
-3. **Run**
-   ```bash
-   python app.py
-   ```
-   Open http://127.0.0.1:5000
+## 3. Installation
 
-## Notes
+```
+pip install -r requirements.txt
+```
 
-- **No deep learning** is used for Tasks 1–4.  
-- Task 5 requires SAM2 installed separately. If SAM2 is missing, the UI will show a helpful message and skip it.
-- ArUco detection works with OpenCV’s built-in dictionaries (e.g., `DICT_4X4_50`). Make sure markers are visible on the boundary.
+## 4. Running the Application
 
+```
+python app.py
+
+```
+
+## 5. Usage
+
+### Parts 1–3
+Place images in:
+```
+static/dataset/
+```
+
+### Part 4
+Place ArUco images in:
+```
+static/dataset_aruco/
+```
+
+## 6. Output Files
+
+All processed results are saved in:
+```
+static/output/
+```
+
+Filenames include:
+- _original  
+- _magnitude  
+- _angle  
+- _log  
+- _edges  
+- _corners  
+- _boundary  
+- _segmented  
+
+## 7. Summary
+
+This project integrates four computer vision tasks into one Flask application, supporting gradients, keypoints, contours, and ArUco segmentation.
