@@ -1,4 +1,4 @@
-# Assignment 3 – Complete Image Processing Web Application
+# Module 3 – Complete Image Processing Web Application
 ### Gradients · Keypoints · Contours · ArUco Marker Segmentation
 
 This project is a full Flask-based web application implementing all four parts of Assignment 3 in the Computer Vision course. It processes images using OpenCV and displays the results through an interactive browser interface.
