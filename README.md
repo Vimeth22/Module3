@@ -14,7 +14,7 @@ All input images are selected directly through the web UI, and all outputs are s
 ## 1. Project Structure
 
 ```
-Assignment3/
+Module3/
 │── app.py
 |-- dataset
 |-- dataset_aruco
