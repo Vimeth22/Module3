@@ -16,23 +16,22 @@ All input images are selected directly through the web UI, and all outputs are s
 ```
 Assignment3/
 │── app.py
-│── requirements.txt
-│
-├── templates/
-│   ├── index.html
-│   ├── result.html
-│   ├── aruco_index.html
-│   └── aruco_result.html
-│
+|-- dataset
+|-- dataset_aruco
 └── static/
-    ├── dataset/
-    ├── dataset_aruco/
     └── output/
-```
+├── templates/
+   ├── index.html
+   ├── result.html
+   ├── aruco_index.html
+   └── aruco_result.html
+|── requirements.txt
 
 ## 2. Features Included
 
 ### Part 1 – Image Gradients
+- Part 1-3 I have uploaded 5 iamges. You can choose any image and see the results.
+- Also you can choose your own images too.
 - Gradient magnitude  
 - Gradient angle  
 - Laplacian of Gaussian (LoG)
@@ -46,6 +45,7 @@ Assignment3/
 - Draws the boundary  
 
 ### Part 4 – ArUco Marker Segmentation
+- There are 10 images. You can click any of thise and see the output.
 - Detects ArUco marker  
 - Computes convex hull  
 - Displays original + segmented output  
@@ -68,13 +68,13 @@ python app.py
 ### Parts 1–3
 Place images in:
 ```
-static/dataset/
+dataset
 ```
 
 ### Part 4
 Place ArUco images in:
 ```
-static/dataset_aruco/
+dataset_aruco
 ```
 
 ## 6. Output Files
